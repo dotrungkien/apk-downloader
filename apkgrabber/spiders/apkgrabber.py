@@ -1,30 +1,28 @@
-import scrapy
 import pandas as pd
+import scrapy
+import urllib.request
 
 
 class ApkgrabberSpider(scrapy.Spider):
     name = 'apkgrabber'
-    start_urls = ['http://www.apkgrabberhay.vn/?pagenumber=1']
-    names = []
-    categories = []
-    contents = []
-    data = pd.DataFrame()
+    base_url = 'https://m.apkpure.com'
+    start_urls = ['https://m.apkpure.com/developer/Ketchapp?page=1',
+                  #   'https://m.apkpure.com/developer/Ketchapp?page=2',
+                  #   'https://m.apkpure.com/developer/Ketchapp?page=3',
+                  #   'https://m.apkpure.com/developer/Ketchapp?page=4',
+                  #   'https://m.apkpure.com/developer/Ketchapp?page=5',
+                  #   'https://m.apkpure.com/developer/Ketchapp?page=6',
+                  #   'https://m.apkpure.com/developer/Ketchapp?page=7',
+                  #   'https://m.apkpure.com/developer/Ketchapp?page=8',
+                  #   'https://m.apkpure.com/developer/Ketchapp?page=9',
+                  ]
+    links = []
 
     def parse(self, response):
-        for product in response.css('div.product-item'):
-            name = product.css('h2.product-title a::text').extract_first()
-            category = product.css(
-                'div.product-item div.category-name a::text').extract_first()
-            desc = '\n'.join(product.css('div.description p::text').extract())
-            self.names.append(name)
-            self.categories.append(category)
-            self.contents.append(desc)
-        next_page = response.css('a.next-page::attr(href)').extract_first()
-        if next_page is not None:
-            yield response.follow(next_page, callback=self.parse)
-        else:
-            print(len(self.names), len(self.categories), len(self.contents))
-            self.data['Name'] = self.names
-            self.data['Category'] = self.categories
-            self.data['Content'] = self.contents
-            self.data.to_csv('data/apkgrabber.csv')
+        for app_link in response.xpath("//a[@class='dd']/@href").getall():
+            url = self.base_url + app_link
+            print("Start downloading ", url)
+            app_name = app_link.split('/')[-1]
+            urllib.request.urlretrieve(url, "data/" + app_name + ".apk")
+
+        # print("links: ", self.links)
