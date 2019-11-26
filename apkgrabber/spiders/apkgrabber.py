@@ -6,26 +6,35 @@ import requests
 import progressbar
 from bs4 import BeautifulSoup
 import scrapy
+import multiprocessing
+
 warnings.filterwarnings("ignore", category=UserWarning, module='bs4')
 
 
 class ApkgrabberSpider(scrapy.Spider):
     name = 'apkgrabber'
-    start_urls = ['https://m.apkpure.com/developer/Ketchapp?page=1',
-                  #   'https://m.apkpure.com/developer/Ketchapp?page=2',
-                  #   'https://m.apkpure.com/developer/Ketchapp?page=3',
-                  #   'https://m.apkpure.com/developer/Ketchapp?page=4',
-                  #   'https://m.apkpure.com/developer/Ketchapp?page=5',
-                  #   'https://m.apkpure.com/developer/Ketchapp?page=6',
-                  #   'https://m.apkpure.com/developer/Ketchapp?page=7',
-                  #   'https://m.apkpure.com/developer/Ketchapp?page=8',
-                  #   'https://m.apkpure.com/developer/Ketchapp?page=9',
-                  ]
+    base_url = 'https://m.apkpure.com'
+    start_urls = ['https://m.apkpure.com/developer/Ketchapp?page=1']
 
     def parse(self, response):
+        app_names = []
         for app_link in response.xpath("//a[@class='dd']/@href").getall():
             app_name = app_link.split('/')[-1]
-            self.get_apk(app_name)
+            app_names.append(app_name)
+            # self.get_apk(app_name)
+        total_page = len(response.xpath(
+            "//div[@class='paging']/ul/li").getall())
+        current_page = int(response.xpath(
+            "//div[@class='paging']/ul/li[@class='active']/a/text()").get())
+        print(
+            "current page {0} total page {1}".format(current_page, total_page))
+        next_page = self.base_url + \
+            response.xpath(
+                "//div[@class='paging']/ul/li[@class='active']/a/@href").get()[:-1] + str(current_page + 1)
+        print(next_page)
+        print('\n'.join(app_names))
+        if (current_page < total_page):
+            yield response.follow(next_page, callback=self.parse)
 
     def get_apk(self, app_name):
         print("{+} getting download link for %s" % (app_name))
