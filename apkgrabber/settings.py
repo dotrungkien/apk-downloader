@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for apkgrabber project
+# Scrapy settings for apkdownloader project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -9,14 +9,14 @@
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'apkgrabber'
+BOT_NAME = 'apkdownloader'
 
-SPIDER_MODULES = ['apkgrabber.spiders']
-NEWSPIDER_MODULE = 'apkgrabber.spiders'
+SPIDER_MODULES = ['apkdownloader.spiders']
+NEWSPIDER_MODULE = 'apkdownloader.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'apkgrabber (+http://www.yourdomain.com)'
+#USER_AGENT = 'apkdownloader (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -47,13 +47,13 @@ ROBOTSTXT_OBEY = True
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 # SPIDER_MIDDLEWARES = {
-#    'apkgrabber.middlewares.ApkgrabberSpiderMiddleware': 543,
+#    'apkdownloader.middlewares.ApkdownloaderSpiderMiddleware': 543,
 # }
 
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 # DOWNLOADER_MIDDLEWARES = {
-#    'apkgrabber.middlewares.MyCustomDownloaderMiddleware': 543,
+#    'apkdownloader.middlewares.MyCustomDownloaderMiddleware': 543,
 # }
 
 # Enable or disable extensions
@@ -65,7 +65,7 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 # ITEM_PIPELINES = {
-#    'apkgrabber.pipelines.ApkgrabberPipeline': 300,
+#    'apkdownloader.pipelines.ApkdownloaderPipeline': 300,
 # }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

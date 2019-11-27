@@ -11,8 +11,8 @@ import multiprocessing
 warnings.filterwarnings("ignore", category=UserWarning, module='bs4')
 
 
-class ApkgrabberSpider(scrapy.Spider):
-    name = 'apkgrabber'
+class ApkdownloaderSpider(scrapy.Spider):
+    name = 'apkdownloader'
     base_url = 'https://m.apkpure.com'
     start_urls = ['https://m.apkpure.com/developer/Ketchapp?page=1']
 

@@ -8,7 +8,7 @@
 import scrapy
 
 
-class ApkgrabberItem(scrapy.Item):
+class ApkdownloaderItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     pass
