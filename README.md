@@ -16,6 +16,14 @@ pip install -r requirement.txt
 
 ## Usage
 
+Change the apks url inside `/apkdownloader/spiders/apkdownloader`, for example:
+
+```python
+start_urls = ['https://m.apkpure.com/developer/Ketchapp?page=1']
+```
+
+then start crawling:
+
 ```sh
 scrapy crawl apkdownloader
 ```
